@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  server:
+    image: nginx
+    networks: 
+      - tunnel
+  localtunnel:
+    build: .
+    restart: on-failure
+    command:
+      --local-host tunnel --port 80 --subdomain localtunnel-example
+    networks: 
+      - tunnel
+    depends_on:
+      - server
+
+networks:
+  tunnel:
